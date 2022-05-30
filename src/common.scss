@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.warp {
+    width: 85%;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.flex-items {
+    // 垂直居中
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bgcRed {
+    background-color: #ff0000;
+}
+
+.bgcBlue {
+    background-color: #2f00ff;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-center2 {
+    display: flex;
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.c-ff4400 {
+    color: #ff4400;
+}
+
+.flex-grid {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 50% 50%;
+}
+
+.flex-grid2 {
+    display: grid;
+    align-items: center;
+    gap: 20px;
+    grid-template-columns: 100px auto;
+}
+
+.pr-50 {
+    padding-right: 50px;
+}
+
+.pr-30 {
+    padding-right: 30px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mlr-5 {
+    margin: 0 5px;
+}
+
+.mt-10 {
+    margin: 10px 0;
+}
+
+.mlr-10 {
+    margin: 0 10px;
+}
+
+.p-13 {
+    padding: 13px 0;
+}
+
+.ptb-15 {
+    padding: 15px 0;
+}
+
+.plr-10 {
+    padding: 0 10px;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.mr-30 {
+    margin-right: 30px;
+}
+
+.mr-26 {
+    margin-right: 26px;
+}
+
+.ml-5 {
+    margin-left: 5px;
+}
+
+.active {
+    border: 1px solid red !important;
+    color: red !important;
+}
+
+.mr-35 {
+    margin-right: 35px;
+}
+
+// 小手
+.smallHand {
+    cursor: pointer;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.colorBlue {
+    color: blue;
+}
