@@ -56,13 +56,11 @@ const routes = [
         path: '/roleManagementView',
         name: 'roleManagement',
         component: () => import('../views/task/roleManagementView.vue'),
-        redirect: '/jurisdictionView',
         children: [
           {
             path: '/ownerView',
             name: 'ownerView',
             component: () => import('../views/task/ownerView.vue'),
-            // redirect: '/jurisdictionView',
             children: [
               {
                 path: '/roleMembersView',

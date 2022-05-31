@@ -23,45 +23,22 @@
                 新键分组
               </div>
             </div>
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-user"></i>
-                <span>默认</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item
-                  index="1-1"
-                  @click="navigator('jurisdictionView')"
-                >
+            <div class="list" v-for="(item, index) in arr" :key="index">
+              <el-submenu :index="index + ''">
+                <template slot="title">
                   <i class="el-icon-user"></i>
-                  所有者
-                </el-menu-item>
-                <el-menu-item index="1-2">
-                  <i class="el-icon-user"></i>
-                  管理员
-                </el-menu-item>
-                <el-menu-item index="1-3">
-                  <i class="el-icon-user"></i>
-                  部门主管
-                </el-menu-item>
-                <el-menu-item index="1-4">
-                  <i class="el-icon-user"></i>
-                  成员
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-menu-item index="2">
-              <i class="el-icon-user"></i>
-              <span slot="title"> 职务 </span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-user"></i>
-              <span slot="title">总监</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-user"></i>
-              <span slot="title">区域</span>
-            </el-menu-item>
+                  <span>{{ item.label }}</span>
+                </template>
+                <div v-for="(el, i) in item.children" :key="i">
+                  <el-menu-item-group>
+                    <el-menu-item :index="i + '1'">
+                      <i class="el-icon-user"></i>
+                      {{ el.roleName }}
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </div>
+              </el-submenu>
+            </div>
           </el-menu>
         </el-aside>
         <el-main class="main">
@@ -74,13 +51,36 @@
 </template>
 
 <script>
+import { getRoleListApi, getRoleGroupListApi } from "@/api/api";
 import base from "@/mixins/base";
 export default {
   mixins: [base],
   data() {
     return {
-      //
+      roleList: [], //角色列表
+      groupingList: [], // 分组列表
+      arr: [], // 这个是角色管理左侧下拉列表需要便利的数据
     };
+  },
+  async created() {
+    let [getRoleList, getRoleGroupList] = await Promise.all([
+      getRoleListApi({ pagination: false }),
+      getRoleGroupListApi({ pagination: false }),
+    ]);
+    this.roleList = getRoleList.data.data.rows;
+    this.groupingList = getRoleGroupList.data.data.rows;
+    this.groupingList.forEach((el) => {
+      let children = this.roleList.filter((item) => {
+        if (el.id == item.groupId) {
+          return item;
+        }
+      });
+      this.arr.push({
+        label: el.groupName,
+        children: children,
+      });
+    });
+    // console.log(this.arr);
   },
   methods: {
     handleOpen(key, keyPath) {

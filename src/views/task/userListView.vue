@@ -101,13 +101,13 @@ export default {
     },
     // 每页多少条
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.userList();
     },
     // 当前第几页
     handleCurrentChange(val) {
-      console.log(`当前第${val} 页`);
+      // console.log(`当前第${val} 页`);
       this.pageNum = val;
       this.userList();
     },

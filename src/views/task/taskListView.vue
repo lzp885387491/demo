@@ -135,7 +135,7 @@ export default {
     this.getTaskList();
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      console.log(res);
+      // console.log(res);
       this.userInfo = res.data.data[0];
     }
   },
@@ -149,20 +149,20 @@ export default {
     },
     // 领取任务的方法
     async receiveTask(taskId) {
-      console.log("receiveTask ~ taskId", taskId);
+      // console.log("receiveTask ~ taskId", taskId);
       let res = await releaseTaskApi({
         taskId, // 这个是任务id
         userId: [this.userInfo.id], // this.userInfo.id 是 当前自己登录的账号的id
       });
       if (res.data.status == 1) {
         // res.data.status==1 的时候  代表任务领取成功了 然后 把前面的 未领取 改为已领取
-        console.log("setReleaseTask ~ res.data", res.data);
+        // console.log("setReleaseTask ~ res.data", res.data);
         this.getTaskList();
       }
     },
     // 每页多少条
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.countPage = val;
       this.getTaskList();
     },
@@ -178,7 +178,7 @@ export default {
         pageNum: this.currentPage, // 获取第几页
       });
       if (res.data.status == 1) {
-        console.log("getTaskList ~ res.data.data", res.data.data);
+        // console.log("getTaskList ~ res.data.data", res.data.data);
         this.count = res.data.data.count;
         this.taskListData = res.data.data.rows;
       }
@@ -186,7 +186,7 @@ export default {
     // handleSelectionChange 这个方法是获取勾选了的信息
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log("勾选了", this.multipleSelection);
+      // console.log("勾选了", this.multipleSelection);
     },
   },
 };

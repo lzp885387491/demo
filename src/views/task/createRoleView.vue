@@ -179,7 +179,7 @@
 </template>
 
 <script>
-import { createRoleApi } from "@/api/api";
+import { createRoleApi, getUserInfoApi } from "@/api/api";
 export default {
   data() {
     return {
@@ -192,18 +192,26 @@ export default {
       project: false, // 项目的多选框
       calendar: false, // 日历的多选框
       netDisk: false, //网盘的多选框
+      data: [], // 用户信息
     };
   },
-  created() {},
+  async created() {
+    let res = await getUserInfoApi();
+    if (res.data.status == 1) {
+      // console.log(res.data.data[0]);
+      this.data = res.data.data[0];
+    }
+  },
   methods: {
     async confirmNew() {
-      console.log(this.roleName);
+      // console.log(this.roleName);
       let { roleName } = this;
       let res = await createRoleApi({
         roleName,
+        userId: this.data.id,
       });
       if (res.data.status == 1) {
-        console.log(res.data);
+        // console.log(res.data);
         this.roleName = "";
       }
     },

@@ -328,9 +328,9 @@ export default {
     },
     // 查询题库接口
     async getListInfo() {
-      console.log("走了查询接口");
-      console.log("每页渲染几条" + this.pageSize);
-      console.log("获取第几页" + this.pageNum);
+      // console.log("走了查询接口");
+      // console.log("每页渲染几条" + this.pageSize);
+      // console.log("获取第几页" + this.pageNum);
       let res = await getListInfoApi({
         type: 1, // 1 单选
         pageSize: this.pageSize, // 每页渲染几条
@@ -340,21 +340,21 @@ export default {
         this.data = res.data.data.rows; //  这个是需要渲染的 rows
         this.count = res.data.data.count; //数据库共多少条
         this.pageCount = res.data.data.pageCount; // 共多少页
-        console.log(this.data);
-        console.log("数据库共有" + res.data.data.count + "条数据");
-        console.log("共分为" + res.data.data.pageCount + "页");
+        // console.log(this.data);
+        // console.log("数据库共有" + res.data.data.count + "条数据");
+        // console.log("共分为" + res.data.data.pageCount + "页");
       }
     },
     // 每页多少条
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       localStorage.setItem("Num", val);
       this.pageSize = Number(localStorage.getItem("Num"));
       this.getListInfo();
     },
     // 当前第几页
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.pageNum = val;
       this.getListInfo();
     },
@@ -410,7 +410,7 @@ export default {
         type: 1,
       });
       if (res.data.status == 1) {
-        console.log(res);
+        // console.log(res);
         this.getListInfo();
       }
     },
@@ -490,7 +490,7 @@ export default {
           type: "success",
           message: "添加成功",
         });
-        console.log(res);
+        // console.log(res);
         this.getListInfo();
         this.initFormPrams();
         this.dialogVisible = false;
@@ -519,7 +519,7 @@ export default {
         this.elasticLayer.id = item.id;
       }
       this.dialogVisible = true;
-      console.log("点击了修改题按钮，这是传回来的这道题的item:", item);
+      // console.log("点击了修改题按钮，这是传回来的这道题的item:", item);
     },
     // 修改题接口
     async revisionQuestion() {
