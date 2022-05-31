@@ -111,11 +111,10 @@ export default {
   },
   methods: {
     async gettaskdetail() {
-      let res = await getTaskdetailApi({ taskId: this.taskId });
+      let { taskId } = this;
+      let res = await getTaskdetailApi({ taskId });
       this.data = res.data.data;
       this.data1 = res.data;
-      console.log(res);
-      console.log(this.data);
     },
     ///任务列表
   },
