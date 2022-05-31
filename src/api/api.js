@@ -174,6 +174,14 @@ export const getTaskListApi = function (payload = {}) {
 }
 
 /**
+ * @description 查询任务详情
+ * @param payload.taskId : <number>,    //任务id
+ */
+export const getTaskdetailApi = function (payload = {}) {
+    return axios.post('/task/detail', payload, getPostConfig())
+}
+
+/**
  * @param params 入参
  * @description 创建角色  /role/create
  * @param payload.roleName <striing> 角色名字

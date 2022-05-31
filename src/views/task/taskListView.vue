@@ -23,7 +23,7 @@
           prop="userName"
           align="center"
           label="发布人"
-          width="90"
+          width="120"
         ></el-table-column>
         <el-table-column
           prop="id"
@@ -35,7 +35,7 @@
           prop="taskName"
           align="center"
           label="任务名称"
-          width="90"
+          width="150"
         ></el-table-column>
         <el-table-column
           prop="duration"
@@ -63,7 +63,7 @@
           prop="createdAt"
           width="200"
         ></el-table-column>
-        <el-table-column align="center" label="操作" width="350">
+        <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <div class="flex">
               <div>
@@ -135,7 +135,7 @@ export default {
     this.getTaskList();
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      console.log(res);
+      console.log(res.data);
       this.userInfo = res.data.data[0];
     }
   },
