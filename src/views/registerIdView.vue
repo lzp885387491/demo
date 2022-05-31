@@ -104,7 +104,7 @@ export default {
         phone,
         captcha,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data.status == 1) {
         this.$message({
           type: "success",

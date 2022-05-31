@@ -10,7 +10,7 @@ import './common.scss'
 Vue.use(ElementUI);
 Vue.use(new VueSocketIO({
   debug: false,
-  connection: 'http://192.168.0.107:7001/',    // 这个地址是 浩爽的 服务端地址
+  connection: 'http://192.168.0.109:7001/',    // 这个地址是 浩爽的 服务端地址
   // connection: 'http://192.168.0.120:7001/',    //这个地址是 尚宇豪 服务端地址
 }))
 Vue.config.productionTip = false

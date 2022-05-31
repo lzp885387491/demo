@@ -177,6 +177,7 @@ export const getTaskListApi = function (payload = {}) {
  * @param params 入参
  * @description 创建角色  /role/create
  * @param payload.roleName <striing> 角色名字
+ * @param payload.userId <Number> //用户id  表示这个角色要哪一个用户创建的
  * @param payload.groupId <Number> 非必填  分组id
  * @param res 出参：-----------
  * @param res.status 1:成功  0、或者其他的 失败

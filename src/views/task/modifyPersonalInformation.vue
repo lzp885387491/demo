@@ -131,7 +131,7 @@ export default {
   watch: {
     // watch 当一个值发生变化的时候  可以做到逻辑  就可以放到watch中来
     "ruleForm.provinceNo": function (code) {
-      console.log("code", code);
+      // console.log("code", code);
       // 当this.ruleForm.provinceNo发生变化时，就修改city的值
       // 找到code值对应的那个json
       this.ruleForm.cityNo = "";
@@ -141,7 +141,7 @@ export default {
       this.city = res && res.children ? res.children : [];
     },
     "ruleForm.cityNo": function (code) {
-      console.log("code", code);
+      // console.log("code", code);
       // 当this.ruleForm.provinceNo发生变化时，就修改city的值
       // 找到code值对应的那个json
       this.ruleForm.areaNo = "";
@@ -170,7 +170,7 @@ export default {
       let res = await getUserInfoApi();
       if (res.data.status == 1) {
         this.getUserInfoData = res.data.data[0];
-        console.log("获取到当前登录的这个账号的信息", this.getUserInfoData);
+        // console.log("获取到当前登录的这个账号的信息", this.getUserInfoData);
         this.ruleForm.avatarName = this.getUserInfoData.avatarName; //昵称
         this.ruleForm.email = this.getUserInfoData.email; //邮箱
         this.ruleForm.desc = this.getUserInfoData.desc; //个人介绍

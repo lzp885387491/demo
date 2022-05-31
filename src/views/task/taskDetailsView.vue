@@ -1,15 +1,6 @@
 <template>
   <div class="taskDetail">
     <!-- 任务详情 -->
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
-    <div class=""></div>
   </div>
 </template>
 

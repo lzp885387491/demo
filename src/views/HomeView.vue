@@ -109,7 +109,10 @@
                 <span> 角色管理 </span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="9-1" @click="navigator('roleManagement')">
+                <el-menu-item
+                  index="9-1"
+                  @click="navigator('jurisdictionView')"
+                >
                   <i class="el-icon-set-up"></i>
                   角色管理
                 </el-menu-item>

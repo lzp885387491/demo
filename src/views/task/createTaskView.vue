@@ -129,8 +129,8 @@ export default {
       } else {
         this.level = 0; //false的话  给0  默认给的是0
       }
-      console.log("onSubmit ~ this.form", this.form);
-      console.log("执行人选中的executor：", this.executor); // 执行人选中的：
+      // console.log("onSubmit ~ this.form", this.form);
+      // console.log("执行人选中的executor：", this.executor); // 执行人选中的：
       let res = this.nmonNullCheck(this.form);
       if (!res) return;
       this.getCreateTask(); // 调用创建任务接口
@@ -165,7 +165,7 @@ export default {
         // 一个是 查看任务列表 按钮 一个是 继续创建按钮
         // 点击查看任务按钮的话  跳到任务列表界面  点击继续创建的话   清空之前的数据 并且关闭弹层
         this.open(); //发布任务成功然后调用弹层方法
-        console.log("setReleaseTask ~ res", res);
+        // console.log("setReleaseTask ~ res", res);
       }
     },
     // getCreateTask 是创建任务的接口方法

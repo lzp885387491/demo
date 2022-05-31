@@ -132,7 +132,7 @@ export default {
   },
   sockets: {
     userCount: function (count) {
-      console.log("count", count);
+      // console.log("count", count);
       this.count = count;
     },
     connect: function () {
@@ -158,7 +158,7 @@ export default {
 
     // 断开时调用的函数
     disconnect: function () {
-      console.log("disconnect!");
+      // console.log("disconnect!");
       // 离开聊天
       this.$socket.emit("removeUser", {
         userId: this.data.id,
