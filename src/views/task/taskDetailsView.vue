@@ -36,12 +36,8 @@
                 {{ activity.content }}
               </el-timeline-item>
             </el-timeline>
-            <div>
-              <quill-editor
-                class="editor"
-                ref="myQuillEditor"
-                v-model="content"
-              />
+            <div class="editor">
+              <quill-editor ref="myQuillEditor" v-model="content" />
             </div>
             <div>
               <el-button type="primary" class="but">提交</el-button>
@@ -141,13 +137,14 @@ export default {
     & .el-container {
       height: 100% !important;
       & .editor {
-        height: 100px;
-        margin-bottom: 70px;
+        height: 150px;
+        margin-bottom: 20px;
         .ql-container {
           min-height: 300px;
         }
         .quill-editor {
           width: 880px;
+          height: auto;
         }
       }
     }
