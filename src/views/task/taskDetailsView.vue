@@ -27,7 +27,6 @@
                 <el-radio :label="false">只看评论</el-radio>
               </el-radio-group>
             </div>
-
             <el-timeline :reverse="reverse">
               <el-timeline-item
                 v-for="(activity, index) in activities"
@@ -37,14 +36,16 @@
                 {{ activity.content }}
               </el-timeline-item>
             </el-timeline>
-            <el-input
-              type="textarea"
-              :rows="2"
-              placeholder="再此输入评论"
-              v-model="textarea"
-            >
-            </el-input>
-            <el-button type="primary" class="but">主要按钮</el-button>
+            <div>
+              <quill-editor
+                class="editor"
+                ref="myQuillEditor"
+                v-model="content"
+              />
+            </div>
+            <div>
+              <el-button type="primary" class="but">提交</el-button>
+            </div>
           </div>
         </el-aside>
         <el-main>
@@ -76,7 +77,11 @@
 
 <script>
 import { getTaskdetailApi } from "@/api/api";
+import "quill/dist/quill.snow.css";
+import { quillEditor } from "vue-quill-editor";
+
 export default {
+  components: { quillEditor },
   data() {
     return {
       reverse: true,
@@ -102,9 +107,15 @@ export default {
       data: "",
       data1: "",
       taskId: 0,
+      content: "",
     };
   },
   created() {
+    if (this.$route.params.taskId == undefined) {
+      this.$router.push({
+        name: "taskListView",
+      });
+    }
     console.log("this.$route.params.taskId", this.$route.params.taskId);
     this.taskId = this.$route.params.taskId;
     this.gettaskdetail();
@@ -121,5 +132,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .taskDetail{}
+.taskDetail {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  & .taskdetails {
+    height: 100% !important;
+    & .el-container {
+      height: 100% !important;
+      & .editor {
+        height: 100px;
+        margin-bottom: 70px;
+        .ql-container {
+          min-height: 300px;
+        }
+        .quill-editor {
+          width: 880px;
+        }
+      }
+    }
+  }
+}
 </style>

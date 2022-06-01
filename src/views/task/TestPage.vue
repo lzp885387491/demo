@@ -1,10 +1,6 @@
 <template>
   <div class="quill-wrap">
-    <quill-editor
-      ref="myQuillEditor"
-      v-model="content"
-      :options="editorOption"
-    />
+    <quill-editor ref="myQuillEditor" v-model="content" />
   </div>
 </template>
 <script>
