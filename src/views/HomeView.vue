@@ -11,7 +11,7 @@
           <div class="info flex-items">
             <div class="flex-items mlr-5">
               <img src="../assets/logo.png" class="icon mlr-5" alt="" />
-              <span>{{ name.avatarName || name.phone }}</span>
+              <span>{{ data.avatarName || data.phone }}</span>
             </div>
             <div class="flex-items signOut" @click="signOut">
               <img src="../assets/logo.png" class="icon mlr-5" alt="" />
@@ -142,13 +142,13 @@ export default {
   mixins: [base],
   data() {
     return {
-      name: "",
+      data: "",
     };
   },
   async created() {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      this.name = res.data.data[0];
+      this.data = res.data.data;
     } else {
       this.$message({
         message: "请重新登录",
