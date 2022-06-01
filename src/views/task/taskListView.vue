@@ -136,7 +136,7 @@ export default {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
       console.log(res.data);
-      this.userInfo = res.data.data[0];
+      this.userInfo = res.data.data;
     }
   },
   methods: {
