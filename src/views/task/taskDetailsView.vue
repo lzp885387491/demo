@@ -116,7 +116,6 @@ export default {
       this.data = res.data.data;
       this.data1 = res.data;
     },
-    ///任务列表
   },
 };
 </script>
