@@ -104,6 +104,7 @@ export default {
       data1: "",
       taskId: 0,
       content: "",
+      abc: "",
     };
   },
   created() {
