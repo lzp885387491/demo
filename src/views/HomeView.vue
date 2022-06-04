@@ -147,6 +147,7 @@ export default {
   },
   async created() {
     let res = await getUserInfoApi();
+    //
     if (res.data.status == 1) {
       this.data = res.data.data;
     } else {
