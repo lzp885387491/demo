@@ -8,7 +8,7 @@
       <el-container>
         <el-aside class="menu-bar">
           <el-menu
-            default-active="1-1"
+            :default-active="defaulActive"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -23,45 +23,25 @@
                 新键分组
               </div>
             </div>
-            <el-submenu index="1">
+            <el-submenu
+              :index="item.id"
+              v-for="item in roleData"
+              :key="item.id"
+            >
               <template slot="title">
                 <i class="el-icon-user"></i>
-                <span>默认</span>
+                <span>{{ item.roleName }}</span>
               </template>
-              <el-menu-item-group>
-                <el-menu-item
-                  index="1-1"
-                  @click="navigator('jurisdictionView')"
-                >
+              <el-menu-item-group
+                v-for="children in item.children"
+                :key="children.id"
+              >
+                <el-menu-item :index="children.id">
                   <i class="el-icon-user"></i>
-                  所有者
-                </el-menu-item>
-                <el-menu-item index="1-2">
-                  <i class="el-icon-user"></i>
-                  管理员
-                </el-menu-item>
-                <el-menu-item index="1-3">
-                  <i class="el-icon-user"></i>
-                  部门主管
-                </el-menu-item>
-                <el-menu-item index="1-4">
-                  <i class="el-icon-user"></i>
-                  成员
+                  {{ children.roleName }}
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="2">
-              <i class="el-icon-user"></i>
-              <span slot="title"> 职务 </span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-user"></i>
-              <span slot="title">总监</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-user"></i>
-              <span slot="title">区域</span>
-            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main class="main">
@@ -79,7 +59,97 @@ export default {
   mixins: [base],
   data() {
     return {
-      //
+      defaulActive: "101",
+      roleData: [
+        {
+          id: "1",
+          roleName: "默认",
+          children: [
+            {
+              id: "101",
+              roleName: "所有者",
+            },
+            {
+              id: "102",
+              roleName: "管理员",
+            },
+            {
+              id: "103",
+              roleName: "部门主管",
+            },
+            {
+              id: "104",
+              roleName: "成员",
+            },
+          ],
+        },
+        {
+          id: "2",
+          roleName: "职务",
+          children: [
+            {
+              id: "201",
+              roleName: "所有者2",
+            },
+            {
+              id: "202",
+              roleName: "管理员2",
+            },
+            {
+              id: "203",
+              roleName: "部门主管2",
+            },
+            {
+              id: "204",
+              roleName: "成员2",
+            },
+          ],
+        },
+        {
+          id: "3",
+          roleName: "总监",
+          children: [
+            {
+              id: "301",
+              roleName: "所有者3",
+            },
+            {
+              id: "302",
+              roleName: "管理员3",
+            },
+            {
+              id: "303",
+              roleName: "部门主管3",
+            },
+            {
+              id: "304",
+              roleName: "成员3",
+            },
+          ],
+        },
+        {
+          id: "4",
+          roleName: "区域",
+          children: [
+            {
+              id: "401",
+              roleName: "所有者4",
+            },
+            {
+              id: "402",
+              roleName: "管理员4",
+            },
+            {
+              id: "403",
+              roleName: "部门主管4",
+            },
+            {
+              id: "404",
+              roleName: "成员4",
+            },
+          ],
+        },
+      ],
     };
   },
   methods: {
