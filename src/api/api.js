@@ -202,7 +202,7 @@ export const createRoleApi = function (payload = {}) {
  * @param payload.pageSize  <Number>非必填  每页获取几条数据  如果不传 默认是获取10条
  * @param payload.pageNum   <Number>非必填  想获取第几页的数据  如果不传 默认是第1页；
  */
-export const getRoleListApi = function (payload = {}) {
+export const getRoleListApi = function (payload = { pagination: false }) {
     return axios.post('/role/list', payload, getPostConfig())
 }
 
@@ -220,7 +220,7 @@ export const setRoleGroupCreateApi = function (payload = {}) {
  * @param payload.pageSize   : <number>,     //非必填  每页获取几条数据  如果不传 默认是获取10条；
  * @param payload.pageNum    : <number>,     //非必填  想获取第几页的数据  如果不传 默认是第1页；
  */
-export const getRoleGroupListApi = function (payload = {}) {
+export const getRoleGroupListApi = function (payload = { pagination: false }) {
     return axios.post('/roleGroup/list', payload, getPostConfig())
 }
 

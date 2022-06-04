@@ -8,7 +8,7 @@
       <el-container>
         <el-aside class="menu-bar">
           <el-menu
-            :default-active="defaulActive"
+            default-active="1-1"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -23,25 +23,22 @@
                 新键分组
               </div>
             </div>
-            <el-submenu
-              :index="item.id"
-              v-for="item in roleData"
-              :key="item.id"
-            >
-              <template slot="title">
-                <i class="el-icon-user"></i>
-                <span>{{ item.roleName }}</span>
-              </template>
-              <el-menu-item-group
-                v-for="children in item.children"
-                :key="children.id"
-              >
-                <el-menu-item :index="children.id">
+            <div class="list" v-for="(item, index) in arr" :key="index">
+              <el-submenu :index="index + ''">
+                <template slot="title">
                   <i class="el-icon-user"></i>
-                  {{ children.roleName }}
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+                  <span>{{ item.label }}</span>
+                </template>
+                <div v-for="(el, i) in item.children" :key="i">
+                  <el-menu-item-group>
+                    <el-menu-item :index="i + '1'">
+                      <i class="el-icon-user"></i>
+                      {{ el.roleName }}
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </div>
+              </el-submenu>
+            </div>
           </el-menu>
         </el-aside>
         <el-main class="main">
@@ -54,103 +51,36 @@
 </template>
 
 <script>
+import { getRoleListApi, getRoleGroupListApi } from "@/api/api";
 import base from "@/mixins/base";
 export default {
   mixins: [base],
   data() {
     return {
-      defaulActive: "101",
-      roleData: [
-        {
-          id: "1",
-          roleName: "默认",
-          children: [
-            {
-              id: "101",
-              roleName: "所有者",
-            },
-            {
-              id: "102",
-              roleName: "管理员",
-            },
-            {
-              id: "103",
-              roleName: "部门主管",
-            },
-            {
-              id: "104",
-              roleName: "成员",
-            },
-          ],
-        },
-        {
-          id: "2",
-          roleName: "职务",
-          children: [
-            {
-              id: "201",
-              roleName: "所有者2",
-            },
-            {
-              id: "202",
-              roleName: "管理员2",
-            },
-            {
-              id: "203",
-              roleName: "部门主管2",
-            },
-            {
-              id: "204",
-              roleName: "成员2",
-            },
-          ],
-        },
-        {
-          id: "3",
-          roleName: "总监",
-          children: [
-            {
-              id: "301",
-              roleName: "所有者3",
-            },
-            {
-              id: "302",
-              roleName: "管理员3",
-            },
-            {
-              id: "303",
-              roleName: "部门主管3",
-            },
-            {
-              id: "304",
-              roleName: "成员3",
-            },
-          ],
-        },
-        {
-          id: "4",
-          roleName: "区域",
-          children: [
-            {
-              id: "401",
-              roleName: "所有者4",
-            },
-            {
-              id: "402",
-              roleName: "管理员4",
-            },
-            {
-              id: "403",
-              roleName: "部门主管4",
-            },
-            {
-              id: "404",
-              roleName: "成员4",
-            },
-          ],
-        },
-      ],
+      roleList: [], //角色列表
+      groupingList: [], // 分组列表
+      arr: [], // 这个是角色管理左侧下拉列表需要便利的数据
     };
+  },
+  async created() {
+    let [getRoleList, getRoleGroupList] = await Promise.all([
+      getRoleListApi({ pagination: false }),
+      getRoleGroupListApi({ pagination: false }),
+    ]);
+    this.roleList = getRoleList.data.data.rows;
+    this.groupingList = getRoleGroupList.data.data.rows;
+    this.groupingList.forEach((el) => {
+      let children = this.roleList.filter((item) => {
+        if (el.id == item.groupId) {
+          return item;
+        }
+      });
+      this.arr.push({
+        label: el.groupName,
+        children: children,
+      });
+    });
+    // console.log(this.arr);
   },
   methods: {
     handleOpen(key, keyPath) {
