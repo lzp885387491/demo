@@ -199,7 +199,7 @@ export default {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
       // console.log(res.data.data[0]);
-      this.data = res.data.data[0];
+      this.data = res.data.data;
     }
   },
   methods: {

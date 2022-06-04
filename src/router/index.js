@@ -9,6 +9,7 @@ const routes = [
     path: '/home',
     name: 'home',
     component: HomeView,
+    redirect: '/myTaskView',
     children: [
       {
         path: '/taskDetailsView',

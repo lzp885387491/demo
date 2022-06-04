@@ -126,7 +126,7 @@ export default {
   async created() {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      this.data = res.data.data[0]; // 把当前登录的用户的信息赋值给data
+      this.data = res.data.data; // 把当前登录的用户的信息赋值给data
     }
     window.addEventListener("keydown", this.keydown, true);
   },
