@@ -6,7 +6,7 @@ export default {
         * @param params 语法：let params = {key:value}; 
         * @param params 调用方法：navigator( ' 去哪个页面的name ' ,  params );
          */
-        navigator(name, params) {
+        navigator(name, query) {
             if (this.$route.name == name) {
                 this.$message({
                     message: "已在当前界面，请勿重复跳转",
@@ -15,7 +15,7 @@ export default {
             } else {
                 this.$router.push({
                     name,
-                    params
+                    query
                 })
             }
         }
