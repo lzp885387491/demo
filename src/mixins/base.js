@@ -8,10 +8,7 @@ export default {
          */
         navigator(name, query) {
             if (this.$route.name == name) {
-                this.$message({
-                    message: "已在当前界面，请勿重复跳转",
-                    type: "warning",
-                });
+                return
             } else {
                 this.$router.push({
                     name,
