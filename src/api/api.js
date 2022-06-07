@@ -151,7 +151,7 @@ export const getUpdateApi = function (payload = {}) {
 /**
  * @description 创建任务接口
  * @param payload.name string-任务名称
- * @param payload.desc string-任务描述
+ * @param payload.desc string-任务描述releaseTaskApi
  * @param payload.duration  number-任务描述
  * @param payload.level  number-任务等级  1:紧急 --- 0:普通任务
  */
@@ -161,7 +161,7 @@ export const getCreateTaskApi = function (payload = {}) {
 
 /**
  * @description 发布任务接口
- * @param payload.userId <array[number]>-用户id,如果给多个人发送任务，可以传数组，数组中是每一个人的id；
+ * @param payload.userIds <array[number]>-用户id,如果给多个人发送任务，可以传数组，数组中是每一个人的id；
  * @param payload.taskId number-任务Id
  */
 export const releaseTaskApi = function (payload = {}) {

@@ -63,7 +63,7 @@
           prop="createdAt"
           width="200"
         ></el-table-column>
-        <el-table-column align="center" label="操作">
+        <el-table-column align="center" label="操作" width="390">
           <template slot-scope="scope">
             <div class="flex">
               <div>
@@ -74,6 +74,13 @@
                   已领取
                 </div>
                 <div class="frame smallHand bgcBlue" v-else>未领取</div>
+              </div>
+              <div
+                class="frame smallHand colorBlue"
+                @click="editTask(scope.row)"
+              >
+                <!-- scope.row.id -->
+                编辑任务
               </div>
               <div
                 class="frame smallHand colorBlue"
@@ -95,6 +102,24 @@
         </el-table-column>
       </el-table>
     </div>
+    <!-- 弹层 -->
+    <div class="elasticLayer">
+      <!-- 弹层内容 -->
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <form-template></form-template>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
     <!-- 分页 -->
     <div class="pagination">
       <el-pagination
@@ -112,10 +137,14 @@
 </template>
 
 <script>
+import formTemplate from "@/components/formTemplateView.vue";
 import { getTaskListApi, releaseTaskApi, getUserInfoApi } from "@/api/api";
 import base from "@/mixins/base";
 export default {
   mixins: [base],
+  components: {
+    "form-template": formTemplate,
+  },
   data() {
     return {
       multipleSelection: [],
@@ -129,6 +158,7 @@ export default {
       userList: "",
       taskId: "",
       userInfo: [], // 当前登录的账号的数据
+      dialogVisible: false,
     };
   },
   async created() {
@@ -140,6 +170,19 @@ export default {
     }
   },
   methods: {
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(() => {
+          done();
+        })
+        .catch(() => {});
+    },
+    // 编辑任务
+    editTask(data) {
+      console.log("打开弹层并复现一下内容");
+      this.dialogVisible = true;
+      console.log("editTask ~ data", data);
+    },
     // View details 任务详情的点击事件 需要传一个参数
     viewDetails(data) {
       console.log("任务id" + data);
@@ -153,7 +196,7 @@ export default {
       console.log("receiveTask ~ taskId", taskId);
       let res = await releaseTaskApi({
         taskId, // 这个是任务id
-        userId: [this.userInfo.id], // this.userInfo.id 是 当前自己登录的账号的id
+        userIds: [this.userInfo.id], // this.userInfo.id 是 当前自己登录的账号的id
       });
       if (res.data.status == 1) {
         // res.data.status==1 的时候  代表任务领取成功了 然后 把前面的 未领取 改为已领取

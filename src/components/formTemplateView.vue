@@ -1,89 +1,76 @@
 <template>
-  <div class="createTask">
-    <div class="box">
-      <!-- title -->
-      <h2>创建页面</h2>
-      <!-- body -->
-      <!-- 这是刚刚我封装的form表单的组件 -->
-      <form-template></form-template>
-      <!-- <div class="from">
-        <el-form ref="form" :model="form" label-width="90px">
-          <el-form-item label="任务名称">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="任务时长">
-            <div class="task">
-              <div>
-                <el-input
-                  class="hour"
-                  maxlength="2"
-                  v-model="form.duration"
-                ></el-input>
-              </div>
-              <div class="txt ml-5">小时</div>
+  <div>
+    <div class="from">
+      <el-form ref="form" :model="form" label-width="90px">
+        <el-form-item label="任务名称">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="任务时长">
+          <div class="task">
+            <div>
+              <el-input
+                class="hour"
+                maxlength="2"
+                v-model="form.duration"
+              ></el-input>
             </div>
-          </el-form-item>
-          <el-form-item label="任务描述">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item>
-          <el-form-item label="执行人">
-            <el-select
-              v-model="executor"
-              multiple
-              filterable
-              allow-create
-              default-first-option
-              placeholder="请选择执行人"
+            <div class="txt ml-5">小时</div>
+          </div>
+        </el-form-item>
+        <el-form-item label="任务描述">
+          <el-input type="textarea" v-model="form.desc"></el-input>
+        </el-form-item>
+        <el-form-item label="执行人">
+          <el-select
+            v-model="executor"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择执行人"
+          >
+            <el-option
+              v-for="item in userList.rows"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             >
-              <el-option
-                v-for="item in userList.rows"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="是否紧急" class="isUrgent">
-            <el-switch v-model="delivery"></el-switch>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-          </el-form-item>
-        </el-form>
-      </div> -->
-      <!-- 弹层 -->
-      <!-- <div class="open">
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose"
-        >
-          <span>任务发布成功！</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="navigator('taskListView')"
-              >查看任务列表</el-button
-            >
-            <el-button type="primary" @click="continueCreating"
-              >继续创建</el-button
-            >
-          </span>
-        </el-dialog>
-      </div> -->
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否紧急" class="isUrgent">
+          <el-switch v-model="delivery"></el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <!-- 弹层 -->
+    <div class="open">
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>任务发布成功！</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="navigator('taskListView')">查看任务列表</el-button>
+          <el-button type="primary" @click="continueCreating"
+            >继续创建</el-button
+          >
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import formTemplate from "@/components/formTemplateView.vue";
 import base from "@/mixins/base";
-import { getCreateTaskApi, releaseTaskApi, getUserList } from "@/api/api";
+import { getCreateTaskApi, setReleaseTaskApi, getUserList } from "@/api/api";
 export default {
   mixins: [base],
-  components: {
-    "form-template": formTemplate,
-  },
   data() {
     return {
       form: {
@@ -160,8 +147,8 @@ export default {
     },
     // 发送任务给执行人的接口
     async setReleaseTask(taskId) {
-      let res = await releaseTaskApi({
-        userIds: this.executor,
+      let res = await setReleaseTaskApi({
+        userId: this.executor,
         taskId,
       });
       if (res.data.status == 1) {
@@ -217,33 +204,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-textarea__inner {
-  height: 150px !important;
-}
-
-::v-deep .task {
-  display: flex !important;
-}
-
-::v-deep .hour {
-  width: 50px !important;
-}
-
-.createTask {
-  display: flex;
-  height: calc(100vh - 90px);
-  & .box {
-    box-sizing: border-box !important;
-
-    & h2 {
-      font-size: 20px;
-    }
-    & .from {
-      width: 400px;
-      & .txt {
-        color: #606266e1;
-      }
-    }
-  }
-}
 </style>
