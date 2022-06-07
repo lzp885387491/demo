@@ -3,74 +3,26 @@
     <div class="box">
       <!-- title -->
       <h2>创建页面</h2>
-      <!-- body -->
-      <!-- 这是刚刚我封装的form表单的组件 -->
-      <form-template></form-template>
-      <!-- <div class="from">
-        <el-form ref="form" :model="form" label-width="90px">
-          <el-form-item label="任务名称">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="任务时长">
-            <div class="task">
-              <div>
-                <el-input
-                  class="hour"
-                  maxlength="2"
-                  v-model="form.duration"
-                ></el-input>
-              </div>
-              <div class="txt ml-5">小时</div>
-            </div>
-          </el-form-item>
-          <el-form-item label="任务描述">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item>
-          <el-form-item label="执行人">
-            <el-select
-              v-model="executor"
-              multiple
-              filterable
-              allow-create
-              default-first-option
-              placeholder="请选择执行人"
+      <form-template v-on:onSubmit="getCreateTask">
+        <el-form-item label="执行人">
+          <el-select
+            v-model="executor"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择执行人"
+          >
+            <el-option
+              v-for="item in userList.rows"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             >
-              <el-option
-                v-for="item in userList.rows"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="是否紧急" class="isUrgent">
-            <el-switch v-model="delivery"></el-switch>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-          </el-form-item>
-        </el-form>
-      </div> -->
-      <!-- 弹层 -->
-      <!-- <div class="open">
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose"
-        >
-          <span>任务发布成功！</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="navigator('taskListView')"
-              >查看任务列表</el-button
-            >
-            <el-button type="primary" @click="continueCreating"
-              >继续创建</el-button
-            >
-          </span>
-        </el-dialog>
-      </div> -->
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </form-template>
     </div>
   </div>
 </template>
@@ -90,11 +42,10 @@ export default {
         name: "", // 任务名称
         duration: "", // 任务时长绑定的
         desc: "", // 任务描述绑定的
+        level: 0, // 任务等级  1代表紧急 0代表普通 默认给的是普通
       },
-      level: 0, // 任务等级  1代表紧急 0代表普通 默认给的是普通
       executor: [], // 执行人选中的
       publishedTasks: [], // 已经发布的任务
-      delivery: false, // 是否紧急绑定的开关  true 开； false 关
       userList: "", // 所有用户的信息列表
       id: "", // 这个是新创建的任务的id
       dialogVisible: false, // 弹层是否打开
@@ -126,28 +77,22 @@ export default {
         })
         .catch(() => {});
     },
-    // onSubmit 是 立即创建按钮的带点击时间
-    onSubmit() {
-      if (this.delivery) {
-        this.level = 1; // true 的话  给1
-      } else {
-        this.level = 0; //false的话  给0  默认给的是0
-      }
-      console.log("onSubmit ~ this.form", this.form);
-      console.log("执行人选中的executor：", this.executor); // 执行人选中的：
-      let res = this.nmonNullCheck(this.form);
-      if (!res) return;
-      this.getCreateTask(); // 调用创建任务接口
-    },
     // form 的非空校验方法
     nmonNullCheck(obj) {
+      let object = {
+        name: obj.name, // 任务名称
+        duration: obj.duration, // 任务时长绑定的
+        desc: obj.desc, // 任务描述绑定的
+      };
       let isok = true;
       let rule = {
         name: "任务名称",
+        desc: "任务描述",
         duration: "任务时长",
+        level: "任务等级",
       };
-      for (const key in obj) {
-        if (!obj[key]) {
+      for (const key in object) {
+        if (!object[key]) {
           this.$message({
             type: "warning",
             message: rule[key] + "不能为空",
@@ -165,22 +110,20 @@ export default {
         taskId,
       });
       if (res.data.status == 1) {
-        // 发送任务成功之后   调用一个弹层  弹层里提示 发布任务成功 并且下边有两个按钮
-        // 一个是 查看任务列表 按钮 一个是 继续创建按钮
-        // 点击查看任务按钮的话  跳到任务列表界面  点击继续创建的话   清空之前的数据 并且关闭弹层
         this.open(); //发布任务成功然后调用弹层方法
         console.log("setReleaseTask ~ res", res);
       }
     },
     // getCreateTask 是创建任务的接口方法
-    async getCreateTask() {
-      if (!this.nmonNullCheck()) return;
-      const { name, desc, duration } = this.form;
+    async getCreateTask(val) {
+      this.form = val;
+      if (!this.nmonNullCheck(this.form)) return;
+      const { name, desc, duration, level } = this.form;
       let res = await getCreateTaskApi({
         name,
         desc,
         duration: Number(duration),
-        level: this.level,
+        level,
       });
       if (res.data.status == 1) {
         this.$message({
@@ -192,7 +135,7 @@ export default {
           name: this.form.name,
           duration: this.form.duration,
           desc: this.form.desc,
-          level: this.level,
+          level: this.form.level,
           executor: this.executor,
         };
         this.publishedTasks.push(tasks); // 这个是已经创建好的数据列表

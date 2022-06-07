@@ -77,7 +77,7 @@
               </div>
               <div
                 class="frame smallHand colorBlue"
-                @click="editTask(scope.row)"
+                @click="gitData(scope.row)"
               >
                 <!-- scope.row.id -->
                 编辑任务
@@ -106,18 +106,32 @@
     <div class="elasticLayer">
       <!-- 弹层内容 -->
       <el-dialog
-        title="提示"
+        title="编辑任务"
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose"
       >
-        <form-template></form-template>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false"
-            >确 定</el-button
-          >
-        </span>
+        <!-- 组件 -->
+        <form-template v-on:onSubmit="editTask">
+          <el-form-item label="执行人">
+            <el-select
+              v-model="executor"
+              multiple
+              filterable
+              allow-create
+              default-first-option
+              placeholder="请选择执行人"
+            >
+              <el-option
+                v-for="item in userList.rows"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </form-template>
       </el-dialog>
     </div>
     <!-- 分页 -->
@@ -152,6 +166,7 @@ export default {
       taskListData: [],
       isok: false,
       pageSize: 10, //
+      executor: [], // 执行人选中的
       count: 0, //共多少页
       currentPage: 1, // 当前第几页
       countPage: 5,
@@ -159,6 +174,7 @@ export default {
       taskId: "",
       userInfo: [], // 当前登录的账号的数据
       dialogVisible: false,
+      from: {}, // 获取组件的数据
     };
   },
   async created() {
@@ -170,6 +186,17 @@ export default {
     }
   },
   methods: {
+    // 发送任务给执行人的接口
+    async setReleaseTask(taskId) {
+      let res = await releaseTaskApi({
+        userId: this.executor,
+        taskId,
+      });
+      if (res.data.status == 1) {
+        this.open(); //发布任务成功然后调用弹层方法
+        console.log("setReleaseTask ~ res", res);
+      }
+    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(() => {
@@ -177,11 +204,14 @@ export default {
         })
         .catch(() => {});
     },
-    // 编辑任务
-    editTask(data) {
-      console.log("打开弹层并复现一下内容");
+    gitData(data) {
       this.dialogVisible = true;
-      console.log("editTask ~ data", data);
+      console.log(data);
+    },
+    // 编辑任务
+    editTask(val) {
+      this.from = val;
+      console.log("editTask ~ this.from", this.from);
     },
     // View details 任务详情的点击事件 需要传一个参数
     viewDetails(data) {
@@ -196,7 +226,7 @@ export default {
       console.log("receiveTask ~ taskId", taskId);
       let res = await releaseTaskApi({
         taskId, // 这个是任务id
-        userIds: [this.userInfo.id], // this.userInfo.id 是 当前自己登录的账号的id
+        userId: [this.userInfo.id], // this.userInfo.id 是 当前自己登录的账号的id
       });
       if (res.data.status == 1) {
         // res.data.status==1 的时候  代表任务领取成功了 然后 把前面的 未领取 改为已领取
