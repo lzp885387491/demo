@@ -142,10 +142,11 @@ export default {
   methods: {
     // View details 任务详情的点击事件 需要传一个参数
     viewDetails(data) {
-      let params = {
+      console.log("任务id" + data);
+      let query = {
         taskId: data,
       };
-      this.navigator("taskDetailsView", params);
+      this.navigator("taskDetailsView", query);
     },
     // 领取任务的方法
     async receiveTask(taskId) {

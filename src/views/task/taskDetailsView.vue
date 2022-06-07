@@ -107,13 +107,13 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.taskId == undefined) {
+    if (this.$route.query.taskId == undefined) {
       this.$router.push({
         name: "taskListView",
       });
     }
-    console.log("this.$route.params.taskId", this.$route.params.taskId);
-    this.taskId = this.$route.params.taskId;
+    console.log("this.$route.query.taskId", this.$route.query.taskId);
+    this.taskId = this.$route.query.taskId;
     this.gettaskdetail();
   },
   methods: {
