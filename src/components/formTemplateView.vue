@@ -25,9 +25,8 @@
           <el-switch v-model="form.level"></el-switch>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="$emit('onSubmit', form)"
-            >确定</el-button
-          >
+          <el-button type="primary" @click="$emit('onSubmit',form)"
+            >确定</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -46,6 +45,9 @@ export default {
       },
     };
   },
+  methods:{
+    
+  }
 };
 </script>
 
@@ -61,15 +63,10 @@ export default {
 ::v-deep .hour {
   width: 50px !important;
 }
-
-.createTask {
-  display: flex;
-  height: calc(100vh - 90px);
-  & .from {
-    width: 400px;
-    & .txt {
-      color: #606266e1;
-    }
+.from {
+  width: 400px;
+  & .txt {
+    color: #606266e1;
   }
 }
 </style>

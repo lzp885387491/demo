@@ -5,7 +5,7 @@ import axios from 'axios';
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    console.log('response', response.data);
+    // console.log('response', response.data);
     // 总结：只要你调用接口  接口返回数据时，就会走到我这个响应拦截器中
     if (response.data.status == 401) {
         // 就认为你没有登录或者是登录失效
