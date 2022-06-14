@@ -117,6 +117,10 @@
                   <i class="el-icon-turn-off"></i>
                   创建角色
                 </el-menu-item>
+                <el-menu-item index="9-3" @click="navigator('JurisdictionCeShiView')">
+                  <i class="el-icon-magic-stick"></i>
+                  权限管理
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-menu-item index="10" @click="navigator('userListView')">

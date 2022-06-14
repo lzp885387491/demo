@@ -16,6 +16,11 @@ const routes = [
         component: () => import('../views/task/taskDetailsView.vue')
       },
       {
+        path: '/JurisdictionCeShiView',
+        name: 'JurisdictionCeShiView',
+        component: () => import('../views/task/JurisdictionCeShiView.vue')
+      },
+      {
         path: '/userListView',
         name: 'userListView',
         component: () => import('../views/task/userListView.vue')
