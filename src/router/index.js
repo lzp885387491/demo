@@ -9,6 +9,7 @@ const routes = [
     path: '/home',
     name: 'home',
     component: HomeView,
+    redirect: '/myTaskView',
     children: [
       {
         path: '/taskDetailsView',
@@ -67,7 +68,6 @@ const routes = [
             path: '/ownerView',
             name: 'ownerView',
             component: () => import('../views/task/ownerView.vue'),
-            // redirect: '/jurisdictionView',
             children: [
               {
                 path: '/roleMembersView',

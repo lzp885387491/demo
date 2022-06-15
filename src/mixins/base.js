@@ -7,7 +7,9 @@ export default {
         * @param params 调用方法：navigator( ' 去哪个页面的name ' ,  params );
          */
         navigator(name, query) {
-            if (this.$route.name == name) {
+            if (name=='') {
+                return;
+            }else if (this.$route.name == name) {
                 return
             } else {
                 this.$router.push({
