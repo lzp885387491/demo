@@ -27,7 +27,7 @@
                 v-if="!data.children.length"
                 type="text"
                 size="mini"
-                @click="openElasticLayer(data)"
+                @click="openfrom(data)"
               >
                 删除
               </el-button>
@@ -50,7 +50,7 @@
             <div>
               <el-input
                 placeholder="请输入名称"
-                v-model="elasticLayer.title"
+                v-model="from.title"
                 clearable
               ></el-input>
             </div>
@@ -58,10 +58,7 @@
           <div class="flex-center mtb-10">
             <div class="mr-5">权限类型：</div>
             <div>
-              <el-select
-                v-model="elasticLayer.type"
-                placeholder="请选择权限类型"
-              >
+              <el-select v-model="from.type" placeholder="请选择权限类型">
                 <el-option
                   v-for="item in typeOptions"
                   :key="item.id"
@@ -74,7 +71,7 @@
           </div>
           <div class="flex-center mtb-10" v-if="label != '新建权限'">
             <div class="mr-5">所在目录：</div>
-            <el-select v-model="elasticLayer.pid" placeholder="请选择所在目录">
+            <el-select v-model="from.pid" placeholder="请选择所在目录">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -85,7 +82,7 @@
             </el-select>
           </div>
         </div>
-        <span v-else>你确定要删除这些数据吗？</span>
+        <span v-else>你确定要删除这条数据吗？</span>
         <span slot="footer" class="dialog-footer flex-center">
           <el-button @click="isok = false">取 消</el-button>
           <el-button
@@ -126,7 +123,7 @@ export default {
       datas: "",
       obj: [], // 修改权限获取的原本参数
       isok: false, // 是否打开弹层
-      // elasticLayer 弹层的数据
+      // from 弹层的数据
       typeOptions: [
         {
           id: 1,
@@ -146,16 +143,13 @@ export default {
       ], // 类型的选择数据
       options: [], // 所在目录选择器的数据
       label: "弹层的标题", // 弹层的标题
-      elasticLayer: {
-        title: "", // 标题
-        type: "", // 类型 1代表左侧栏  2代表页面  3代表功能
-        pid: "", // 父id pid如果等于某项id 就是这个的子项    如果是null 就代表没有子项
-      },
+      from: {},
       deleteId: "", // 删除的id
       rows: [], // 查询权限返回的rows
     };
   },
   created() {
+    this.initFrom();
     this.getPermissionList();
   },
   methods: {
@@ -163,9 +157,9 @@ export default {
     modify(data) {
       this.isok = true;
       this.label = "编辑权限";
-      this.elasticLayer.title = data.title;
-      this.elasticLayer.type = data.type;
-      this.elasticLayer.pid = data.pid;
+      this.from.title = data.title;
+      this.from.type = data.type;
+      this.from.pid = data.pid;
       this.obj = data;
       this.options = this.rows;
       this.options.push({
@@ -177,7 +171,7 @@ export default {
     },
     // 修改权限的接口
     async getPermissionUpdate() {
-      let { title, type, pid } = this.elasticLayer;
+      let { title, type, pid } = this.from;
       let { id } = this.obj;
       let res = await getPermissionUpdateApi({
         id,
@@ -191,13 +185,17 @@ export default {
           type: "success",
         });
         this.getPermissionList();
-        this.elasticLayer = {
-          title: "", // 标题
-          type: "", // 类型 1代表左侧栏  2代表页面  3代表功能
-          pid: "", // 父id pid如果等于某项id 就是这个的子项    如果是null 就代表没有子项
-        };
+        this.initFrom();
         this.isok = false;
       }
+    },
+    // 初始化form
+    initFrom() {
+      this.from = {
+        title: "", // 标题
+        type: "", // 类型 1代表左侧栏  2代表页面  3代表功能
+        pid: "", // 父id pid如果等于某项id 就是这个的子项    如果是null 就代表没有子项
+      };
     },
     // 获取权限列表接口的方法
     async getPermissionList() {
@@ -223,19 +221,14 @@ export default {
     },
     // append 打开弹层
     append(data) {
-      this.elasticLayer = {
-        title: "", // 标题
-        type: "", // 类型 1代表左侧栏  2代表页面  3代表功能
-        pid: "", // 父id pid如果等于某项id 就是这个的子项    如果是null 就代表没有子项
-      };
+      this.initFrom();
       this.isok = true;
       this.label = "新建权限";
-      this.elasticLayer.pid = data.id;
+      this.from.pid = data.id;
     },
     // 添加的方法
     async appendData() {
-      let { title, type, pid } = this.elasticLayer;
-
+      let { title, type, pid } = this.from;
       let res = await getPermissionCreateApi({ title, type, pid });
       if (res.data.status == 1) {
         this.$message({
@@ -247,7 +240,7 @@ export default {
       }
     },
     // 删除
-    openElasticLayer(datas) {
+    openfrom(datas) {
       this.isok = true; // 打开弹层
       this.label = "删除权限";
       this.deleteId = datas.id;
