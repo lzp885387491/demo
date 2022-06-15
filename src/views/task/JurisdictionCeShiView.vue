@@ -6,15 +6,16 @@
         <div class="mt-10">
           <el-button type="primary" @click="append">添加</el-button>
         </div>
-        <!-- default-expand-all  默认展开 -->
+        <!-- default-expand-all 是否 默认展开 -->
         <el-tree
           :data="data"
+          default-expand-all
           show-checkbox
           node-key="id"
           :expand-on-click-node="false"
         >
           <span class="custom-tree-node" slot-scope="{ data }">
-            <span>{{ data.title + "---------" + data.id }}</span>
+            <span>{{ data.title }}</span>
             <span>
               <el-button type="text" size="mini" @click="modify(data)">
                 编辑
@@ -164,8 +165,15 @@ export default {
       this.label = "编辑权限";
       this.elasticLayer.title = data.title;
       this.elasticLayer.type = data.type;
+      this.elasticLayer.pid = data.pid;
       this.obj = data;
       this.options = this.rows;
+      this.options.push({
+        id: 0,
+        type: 0,
+        title: "根目录",
+        pid: null,
+      });
     },
     // 修改权限的接口
     async getPermissionUpdate() {
