@@ -9,7 +9,6 @@
         <!-- default-expand-all 是否 默认展开 -->
         <el-tree
           :data="data"
-          default-expand-all
           show-checkbox
           node-key="id"
           :expand-on-click-node="false"

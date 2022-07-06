@@ -12,6 +12,11 @@ const routes = [
     redirect: '/myTaskView',
     children: [
       {
+        path: '/SetAvatr',
+        name: 'SetAvatr',
+        component: () => import('../views/SetAvatar.vue')
+      },
+      {
         path: '/taskDetailsView',
         name: 'taskDetailsView',
         component: () => import('../views/task/taskDetailsView.vue')
