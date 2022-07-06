@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    userInfoData: ''
   },
   getters: {
   },
   mutations: {
+    userInfoData: (state, payload) => {
+      state.userInfoData = payload;
+    }
   },
   actions: {
   },

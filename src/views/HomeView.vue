@@ -10,8 +10,15 @@
           </div>
           <div class="info flex-items">
             <div class="flex-items mlr-5">
-              <img src="../assets/logo.png" class="icon mlr-5" alt="" />
-              <span>{{ data.avatarName || data.phone }}</span>
+              <img
+                :src="$store.state.userInfoData.avatarImg"
+                class="icon mlr-5"
+                alt=""
+              />
+              <span>{{
+                $store.state.userInfoData.avatarName ||
+                $store.state.userInfoData.phone
+              }}</span>
             </div>
             <div class="flex-items signOut" @click="signOut">
               <img src="../assets/logo.png" class="icon mlr-5" alt="" />
@@ -79,14 +86,12 @@ import { getUserInfoApi } from "@/api/api";
 export default {
   mixins: [base],
   data() {
-    return {
-      data: "",
-    };
+    return {};
   },
   async created() {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      this.data = res.data.data;
+      this.$store.state.userInfoData = res.data.data;
     } else {
       this.$message({
         message: "请重新登录",

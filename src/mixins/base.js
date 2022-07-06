@@ -157,7 +157,7 @@ export default {
             if (name == '') {
                 return;
             } else if (this.$route.name == name) {
-                return
+                return;
             } else {
                 this.$router.push({
                     name,
