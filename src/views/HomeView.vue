@@ -11,13 +11,13 @@
           <div class="info flex-items">
             <div class="flex-items mlr-5">
               <img
-                :src="$store.state.userInfoData.avatarImg"
+                :src="$store.state.user.userInfoData.avatarImg"
                 class="icon mlr-5"
                 alt=""
               />
               <span>{{
-                $store.state.userInfoData.avatarName ||
-                $store.state.userInfoData.phone
+                $store.state.user.userInfoData.avatarName ||
+                $store.state.user.userInfoData.phone
               }}</span>
             </div>
             <div class="flex-items signOut" @click="signOut">
@@ -31,7 +31,7 @@
         <!-- 左侧菜单栏 -->
         <el-aside class="list">
           <el-menu
-            default-active="6-1"
+            default-active="6"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -91,7 +91,7 @@ export default {
   async created() {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
-      this.$store.state.userInfoData = res.data.data;
+      this.$store.commit("user/userInfoData", res.data.data);
     } else {
       this.$message({
         message: "请重新登录",

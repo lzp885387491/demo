@@ -37,16 +37,17 @@ const getPostConfig = function () {
  * @dparam 2.类型：‘post’
  * @dparam 3.描述:此接口用于上传图片
  */
-//  4.入参:
-//   let formData = new **FormData**() 
-//   formData.append('file', file); // file上传的 二进制的一个图片文件
-//   formData.append('type', 2);	// type代表图片的类型 2头像
-//  var data = {
-//      formData ,
-//  }
 export const uploadImg = function (payload = {}) {
     return axios.post("/upload/image", payload, getPostConfig());
 }
+
+/**
+ * @description返回头像列表的接口 1.接口名:/avatar/list
+ */
+export const avatarList = function (payload = {}) {
+    return axios.post("/avatar/list", payload, getPostConfig());
+}
+
 
 
 
