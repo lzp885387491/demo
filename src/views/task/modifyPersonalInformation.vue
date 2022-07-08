@@ -170,7 +170,7 @@ export default {
       let res = await getUserInfoApi();
       if (res.data.status == 1) {
         this.getUserInfoData = res.data.data;
-        // console.log("获取到当前登录的这个账号的信息", this.getUserInfoData);
+        console.log("获取到当前登录的这个账号的信息", this.getUserInfoData);
         this.ruleForm.avatarName = this.getUserInfoData.avatarName; //昵称
         this.ruleForm.email = this.getUserInfoData.email; //邮箱
         this.ruleForm.desc = this.getUserInfoData.desc; //个人介绍

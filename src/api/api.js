@@ -2,6 +2,21 @@
 
 import axios from 'axios';
 
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    // console.log('response', response.data);
+    // 总结：只要你调用接口  接口返回数据时，就会走到我这个响应拦截器中
+    if (response.data.status == 401) {
+        // 就认为你没有登录或者是登录失效
+        window.location.href = '/'
+    }
+    return response;
+}, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+});
+
 const baseURL = '/api';
 /**
  * @returns token值 放到请求头中
@@ -16,6 +31,25 @@ const getPostConfig = function () {
         }
     }
 }
+
+/**
+ * @description上传头像 1.接口名:/upload/image
+ * @dparam 2.类型：‘post’
+ * @dparam 3.描述:此接口用于上传图片
+ */
+export const uploadImg = function (payload = {}) {
+    return axios.post("/upload/image", payload, getPostConfig());
+}
+
+/**
+ * @description返回头像列表的接口 1.接口名:/avatar/list
+ */
+export const avatarList = function (payload = {}) {
+    return axios.post("/avatar/list", payload, getPostConfig());
+}
+
+
+
 
 /**
  * @description 获取用户信息
@@ -136,7 +170,7 @@ export const getUpdateApi = function (payload = {}) {
 /**
  * @description 创建任务接口
  * @param payload.name string-任务名称
- * @param payload.desc string-任务描述
+ * @param payload.desc string-任务描述releaseTaskApi
  * @param payload.duration  number-任务描述
  * @param payload.level  number-任务等级  1:紧急 --- 0:普通任务
  */
@@ -146,7 +180,7 @@ export const getCreateTaskApi = function (payload = {}) {
 
 /**
  * @description 发布任务接口
- * @param payload.userId <array[number]>-用户id,如果给多个人发送任务，可以传数组，数组中是每一个人的id；
+ * @param payload.userIds <array[number]>-用户id,如果给多个人发送任务，可以传数组，数组中是每一个人的id；
  * @param payload.taskId number-任务Id
  */
 export const releaseTaskApi = function (payload = {}) {
@@ -174,6 +208,14 @@ export const getTaskListApi = function (payload = {}) {
 }
 
 /**
+ * @description 查询任务详情
+ * @param payload.taskId : <number>,    //任务id
+ */
+export const getTaskdetailApi = function (payload = {}) {
+    return axios.post('/task/detail', payload, getPostConfig())
+}
+
+/**
  * @param params 入参
  * @description 创建角色  /role/create
  * @param payload.roleName <striing> 角色名字
@@ -195,7 +237,7 @@ export const createRoleApi = function (payload = {}) {
  * @param payload.pageSize  <Number>非必填  每页获取几条数据  如果不传 默认是获取10条
  * @param payload.pageNum   <Number>非必填  想获取第几页的数据  如果不传 默认是第1页；
  */
-export const getRoleListApi = function (payload = {}) {
+export const getRoleListApi = function (payload = { pagination: false }) {
     return axios.post('/role/list', payload, getPostConfig())
 }
 
@@ -213,7 +255,7 @@ export const setRoleGroupCreateApi = function (payload = {}) {
  * @param payload.pageSize   : <number>,     //非必填  每页获取几条数据  如果不传 默认是获取10条；
  * @param payload.pageNum    : <number>,     //非必填  想获取第几页的数据  如果不传 默认是第1页；
  */
-export const getRoleGroupListApi = function (payload = {}) {
+export const getRoleGroupListApi = function (payload = { pagination: false }) {
     return axios.post('/roleGroup/list', payload, getPostConfig())
 }
 
@@ -235,4 +277,43 @@ export const setCommentCreateApi = function (payload = {}) {
  */
 export const getCommentListApi = function (payload = {}) {
     return axios.post('/comment/list', payload, getPostConfig())
+}
+
+/**
+ * @description 获取权限列表 /comment/list
+ * @param payload.pagination : <boolean>,    //非必填  表示是否需要分页  如果传 false：不分页   true:分页   默认不传是分页; 
+ * @param payload.pageSize   : <number>,     //非必填  每页获取几条数据  如果不传 默认是获取10条；
+ * @param payload.pageNum    : <number>,     //非必填  想获取第几页的数据  如果不传 默认是第1页；
+ */
+export const getPermissionListApi = function (payload = { pagination: false }) {
+    return axios.post('/permission/list', payload, getPostConfig())
+}
+
+/**
+ * @description 创建权限接口 /permission/create
+ * @param payload.title :<string>, //标题  
+ * @param payload.type  :<number>  //类型   1代表左侧栏  2代表页面  3代表功能
+ * @param payload.pid   :<number>  //pid如果为空就是最大的一级  如果等于某项的id就是它的子级；
+ */
+export const getPermissionCreateApi = function (payload = { pagination: false }) {
+    return axios.post('/permission/create', payload, getPostConfig())
+}
+
+/**
+ * @description 删除权限接口 /permission/delete
+ * @param payload.id: <arr>,   // 必填项 权限的id  如果有子级 就把子级跟父级的id都传过来 是一个数组
+ */
+export const getPermissionDeleteApi = function (payload = { pagination: false }) {
+    return axios.post('/permission/delete', payload, getPostConfig())
+}
+
+/**
+ * @description 修改权限接口 /permission/update
+ * @param payload.id   : <number>     //id
+ * @param payload.title: <string>,    //标题
+ * @param payload.type : <number>,    //类型
+ * @param payload.pid  : <number>,    //父id
+ */
+export const getPermissionUpdateApi = function (payload = { pagination: false }) {
+    return axios.post('/permission/update', payload, getPostConfig())
 }
