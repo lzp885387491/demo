@@ -46,12 +46,11 @@
                   <span> {{ item.title }} </span>
                 </template>
                 <div v-if="item.children.length != 0">
-                  <el-menu-item-group>
+                  <el-menu-item-group v-for="(it, i) in item.children" :key="i">
                     <el-menu-item
                       :index="index + '-' + i + ''"
-                      v-for="(it, i) in item.children"
-                      :key="i"
                       @click="navigator(it.link)"
+                      v-if="it.meta.identifys.includes(identify)"
                     >
                       <i :class="it.icon"></i>
                       <span> {{ it.title }} </span>
@@ -86,12 +85,15 @@ import { getUserInfoApi } from "@/api/api";
 export default {
   mixins: [base],
   data() {
-    return {};
+    return {
+      identify: "",
+    };
   },
   async created() {
     let res = await getUserInfoApi();
     if (res.data.status == 1) {
       this.$store.commit("user/userInfoData", res.data.data);
+      this.identify = res.data.data.identify;
     } else {
       this.$message({
         message: "请重新登录",

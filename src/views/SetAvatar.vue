@@ -1,15 +1,14 @@
 <template>
   <div class="setavatr">
     <div class="flex">
-      <div class="mr-10">
-        <img
-          v-if="imageUrl"
-          :src="imageUrl"
-          @click="fanhui"
-          alt="图片加载失败"
-          class="avatar"
-        />
-      </div>
+      <img
+        v-if="imageUrl"
+        :src="imageUrl"
+        @click="fanhui(imageUrl)"
+        :class="{ active: isImageUrl == imageUrl }"
+        alt="图片加载失败"
+        class="avatar mr-10 smallHand"
+      />
       <el-upload
         class="avatar-uploader"
         action="/api//upload/image"
@@ -22,21 +21,21 @@
         <i class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </div>
-    <div>
-      <h2>默认的</h2>
-      <div class="flex">
-        <div v-for="(item, i) in avatarlist" :key="i">
-          <img
-            v-if="item.url"
-            @click="choice(item)"
-            :src="item.url"
-            alt="图片加载失败"
-            class="avatar mlr-5"
-          />
-        </div>
-      </div>
-    </div>
-    <el-button v-if="imageUrl" @click="open" type="primary">保存头像</el-button>
+    <el-button v-if="imageUrl" class="mtb-10" @click="open" type="primary"
+      >保存头像</el-button
+    >
+    <h2 class="ptb-15">默认的</h2>
+    <template v-for="(item, i) in avatarlist">
+      <img
+        :class="{ active: active == i }"
+        v-if="item.url"
+        :key="i"
+        @click="choice(item, i)"
+        :src="item.url"
+        alt="图片加载失败"
+        class="avatar2 box-sizing smallHand mlr-5"
+      />
+    </template>
   </div>
 </template>
 
@@ -54,6 +53,8 @@ export default {
       avatarlist: [],
       url: "",
       huancui: "",
+      active: "",
+      isImageUrl: "",
     };
   },
   async created() {
@@ -64,14 +65,15 @@ export default {
     }
   },
   methods: {
-    //
-    fanhui() {
+    fanhui(imageUrl) {
       this.avatarImg = this.imageUrl;
+      this.isImageUrl = imageUrl;
     },
     // 点击默认头像出发的
-    choice(url) {
+    choice(url, i) {
       this.avatarImg = url.url;
       this.url = url.url;
+      this.active = i;
     },
     handleAvatarSuccess(res, file) {
       this.avatarImg = res.data; // 用于一会保存在vuex中用
@@ -137,13 +139,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .setavatr {
   box-sizing: border-box;
   padding: 10px;
 }
 .active {
-  background-color: black;
+  box-sizing: border-box;
+  border: 3px dashed blue !important;
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
@@ -157,6 +160,7 @@ export default {
 }
 .avatar-uploader-icon {
   font-size: 28px;
+  border: 1px dashed #ccc;
   color: #8c939d;
   width: 178px;
   height: 178px;
@@ -166,6 +170,9 @@ export default {
 .avatar {
   width: 178px;
   height: 178px;
-  display: block;
+}
+.avatar2{
+  width: 100px;
+  height: 100px;
 }
 </style>

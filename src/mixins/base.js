@@ -14,6 +14,9 @@ export default {
                             name: "questionView",
                             children: [],
                             link: "questionView",
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -21,6 +24,9 @@ export default {
                             name: "htmlQuestion",
                             link: "htmlQuestion",
                             children: [],
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -28,6 +34,9 @@ export default {
                             name: "jsQuestion",
                             children: [],
                             link: "jsQuestion",
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -35,6 +44,9 @@ export default {
                             name: "cssQuestion",
                             children: [],
                             link: "cssQuestion",
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                     ],
                 },
@@ -44,6 +56,9 @@ export default {
                     name: "",
                     children: [],
                     link: "",
+                    meta: {
+                        identifys: [1, 2]
+                    }
                 },
                 {
                     icon: "el-icon-document",
@@ -51,6 +66,9 @@ export default {
                     name: "",
                     children: [],
                     link: "",
+                    meta: {
+                        identifys: [1, 2]
+                    }
                 },
                 {
                     title: "刷题系统",
@@ -58,6 +76,9 @@ export default {
                     link: "",
                     icon: "el-icon-setting",
                     children: [],
+                    meta: {
+                        identifys: [1, 2]
+                    }
                 },
                 {
                     title: "个人中心",
@@ -70,13 +91,19 @@ export default {
                             link: "modifyPersonalInformation",
                             name: "modifyPersonalInformation",
                             children: [],
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: '',
                             title: '设置头像',
                             link: 'SetAvatr',
                             name: 'SetAvatr',
-                            children:[]
+                            children: [],
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -84,6 +111,9 @@ export default {
                             title: "我的任务",
                             name: "myTaskView",
                             children: [],
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                     ],
                 },
@@ -98,6 +128,9 @@ export default {
                             name: "createTaskView",
                             link: "createTaskView",
                             children: [],
+                            meta: {
+                                identifys: [1]
+                            }
                         },
                         {
                             icon: "",
@@ -105,6 +138,9 @@ export default {
                             link: "taskListView",
                             name: "taskListView",
                             children: [],
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                     ],
                 },
@@ -119,6 +155,9 @@ export default {
                             name: "roleManagement",
                             children: [],
                             link: "roleManagement",
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -126,6 +165,9 @@ export default {
                             name: "createRole",
                             children: [],
                             link: "createRole",
+                            meta: {
+                                identifys: [1, 2]
+                            }
                         },
                         {
                             icon: "",
@@ -133,6 +175,9 @@ export default {
                             name: "JurisdictionCeShiView",
                             children: [],
                             link: "JurisdictionCeShiView",
+                            meta: {
+                                identifys: [1]
+                            }
                         },
                     ],
                 },
@@ -142,9 +187,12 @@ export default {
                     icon: "el-icon-menu",
                     link: "userListView",
                     children: [],
+                    meta: {
+                        identifys: [1, 2]
+                    }
                 },
             ], // home页左侧侧边栏   和  角色管理 下边的 功能权限里 的数据    公用的
-        }; 
+        };
     },
     methods: {
         /**
